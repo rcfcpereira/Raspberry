@@ -1,24 +1,19 @@
 import time,sys
 from RPi import GPIO
+import smbus
+from picamera2 import Picamera2
+
+picam2 = Picamera2
+
 
 GPIO.setmode(GPIO.BCM)
-GPIO.setwarnings(False)
-GPIO.setup(18, GPIO.IN, GPIO.PUD_UP)
+GPIO.setup(17, GPIO.IN)
+GPIO.setup(16, GPIO.OUT)
+GPIO.setup(5, GPIO.IN)
 
-
-if sys.platform == 'uwp':
-    import winrt_smbus as smbus
-    bus = smbus.SMBus(1)
-else:
-    import smbus
-    import RPi.GPIO as GPIO
-    rev = GPIO.RPI_REVISION
-    if rev == 2 or rev == 3:
-        bus = smbus.SMBus(1)
-    else:
-        bus = smbus.SMBus(0)
-
+GPIO.output(16,1)
 # I2C addresses
+bus = smbus.SMBus(1)
 DISPLAY_TEXT_ADDR = 0x3e
 
 
@@ -78,22 +73,29 @@ if __name__=="__main__":
     setText("Drag Race")
     time.sleep(2)
 
-    while GPIO.input(18) == 0:
+    while GPIO.input(5) == 0:
          setText("Robo Fora da linha")
          time.sleep(5)
+         
 
     textCommand(0x01)
 
-    while (GPIO.input(18) == 1):
+    while (GPIO.input(17) == 1):
         
         setText_norefresh("Time\n {}".format(str(clock)))
-        clock = 1+clock
+        clock = 0.001+clock
         time.sleep(0.001)
     
     textCommand(0x01)
     setText("Tempo final:\n {}".format(str(clock)))
+    
+    picam2.start_and_capture_file("image.jpg")
 
     time.sleep(10)
 
-    exit("End race!!!!!")
+    setText("End race!!!!!")
+    
+    GPIO.cleanup()
+    
+    exit()
 
