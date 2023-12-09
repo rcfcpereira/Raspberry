@@ -2,9 +2,10 @@ import time,sys
 from RPi import GPIO
 import smbus
 from picamera2 import Picamera2
+from picamera2.encoders import MJPEGEncoder
 
 picam2 = Picamera2()
-
+encoder = MJPEGEncoder()
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(17, GPIO.IN)
@@ -70,18 +71,23 @@ def setText_norefresh(text):
 if __name__=="__main__":
     clock = 0
 
+    
     setText("Drag Race")
     time.sleep(2)
 
-    while GPIO.input(5) == 0:
-         setText("Robo Fora da linha")
-         time.sleep(5)
-         
+    while (GPIO.input(5) == 1):
+        
+        setText("Robo Fora da linha")
+        time.sleep(1)
+
 
     textCommand(0x01)
 
+    picam2.start_recording(encoder, "test.mp4")
+
     while (GPIO.input(17) == 1):
         
+        textCommand(0x01)
         setText_norefresh("Time\n {}".format(str(clock)))
         clock = 0.001+clock
         time.sleep(0.001)
@@ -89,11 +95,13 @@ if __name__=="__main__":
     textCommand(0x01)
     setText("Tempo final:\n {}".format(str(clock)))
     
-    picam2.start_and_capture_files("image.jpg")
-
+    picam2.stop_recording()
     time.sleep(10)
 
     setText("End race!!!!!")
+    
+    time.sleep(5)
+    textCommand(0x01)
     
     GPIO.cleanup()
     
