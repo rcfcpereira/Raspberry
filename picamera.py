@@ -18,5 +18,3 @@ picam2.stop_recording()
 exit()
 
 sleep
-
-
