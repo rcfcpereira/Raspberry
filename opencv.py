@@ -23,7 +23,7 @@ lower_blue = np.array([80,60,20])
 upper_blue = np.array([130,255,255])
 
 while True:
-    ret, frame = cap.read()
+    ret, frame = cap.read(0)
 
     imgHSV = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
