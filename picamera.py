@@ -1,12 +1,22 @@
-import time
-from grove.grove_4_digit_display import Grove4DigitDisplay
+from picamera2 import Picamera2
+from time import sleep
 
-display = Grove4DigitDisplay(18, 13)
+picam2 = Picamera2()
 
-count = 0
-while True:
-    t = time.strftime("%H%M", time.localtime(time.time()))
-    display.show(t)
-    display.set_colon(count & 1)
-    count += 1
-    time.sleep(1)
+config = picam2.create_video_configuration(main ={"format": "XBGR8888", "size": (640,480)})
+
+picam2.video_configuration.controls.FrameRate = 120.0
+
+picam2.configure(config)
+
+picam2.start_and_record_video("test.mp4")
+
+sleep(100)
+
+picam2.stop_recording()
+
+exit()
+
+sleep
+
+
