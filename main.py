@@ -18,7 +18,7 @@ GPIO.setup(18, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 GPIO.output(16,0)
 
 #########################################
-LCD 16x2
+#LCD 16x2
 # I2C addresses
 bus = smbus.SMBus(1)
 DISPLAY_TEXT_ADDR = 0x3e
