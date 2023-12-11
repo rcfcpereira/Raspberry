@@ -2,22 +2,25 @@ import time,sys
 from RPi import GPIO
 import smbus
 from picamera2 import Picamera2
-from picamera2.encoders import MJPEGEncoder
+from picamera2.encoders import H264Encoder
 
-picam2 = Picamera2()
-encoder = MJPEGEncoder()
+picam2 = Picamera2(0)
+encoder = H264Encoder()
+
+#Define GPIOS
+
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(17, GPIO.IN)
 GPIO.setup(16, GPIO.OUT)
 GPIO.setup(5, GPIO.IN)
+GPIO.setup(18, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 
-GPIO.output(16,1)
 # I2C addresses
 bus = smbus.SMBus(1)
 DISPLAY_TEXT_ADDR = 0x3e
 
-
+GPIO.output(16,0)
 
 # send command to display (no need for external use)    
 def textCommand(cmd):
@@ -75,22 +78,35 @@ if __name__=="__main__":
     setText("Drag Race")
     time.sleep(2)
 
-    while (GPIO.input(5) == 1):
+    while (GPIO.input(5) == 0):
         
         setText("Robo Fora da linha")
-        time.sleep(1)
+        time.sleep(0.5)
 
+    setText("Press the button to start race")
+    GPIO.output(16,1)
+
+    while True:
+        
+        if (GPIO.input(17) == 0):
+            
+            for x in range(6):
+            
+                setText("Race Start in:\n{}".format(str(x)))
+                time.sleep(1)
+        
+            break
+            
 
     textCommand(0x01)
 
-    picam2.start_recording(encoder, "test.mp4")
+    picam2.start_recording(encoder, "race.h264")
 
-    while (GPIO.input(17) == 1):
+    while (GPIO.input(18) == 1):
         
-        textCommand(0x01)
         setText_norefresh("Time\n {}".format(str(clock)))
-        clock = 0.001+clock
-        time.sleep(0.001)
+        clock = 1+clock
+        time.sleep(0.01)
     
     textCommand(0x01)
     setText("Tempo final:\n {}".format(str(clock)))
