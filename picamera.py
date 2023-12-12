@@ -1,20 +1,24 @@
 from picamera2 import Picamera2
 from time import sleep
 
-picam2 = Picamera2()
+picam2_0 = Picamera2(0)
+picma2_1 = Picamera2(1)
 
-config = picam2.create_video_configuration(main ={"format": "XBGR8888", "size": (640,480)})
+picam2_0.video_configuration.controls.FrameRate = 90.0
 
-picam2.video_configuration.controls.FrameRate = 120.0
+config = picam2_0.create_video_configuration(main ={"format": "XBGR8888", "size": (640,480)})
+config = picam2_1.create_video_configuration(main ={"format": "XBGR8888", "size": (640,480)})
 
-picam2.configure(config)
 
-picam2.start_and_record_video("test.mp4")
+picam2_0.configure(config)
+picam2_1.configure(config)
 
-sleep(100)
+picam2_0.start_and_record_video("test_0.mp4")
+picam2_1.start_and_record_video("test_1.mp4")
 
-picam2.stop_recording()
+sleep(10)
+
+picam2_0.stop_recording()
+picam2_1.stop_recording()
 
 exit()
-
-sleep
