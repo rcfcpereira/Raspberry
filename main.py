@@ -2,10 +2,18 @@ import time,sys
 from RPi import GPIO
 import smbus
 from picamera2 import Picamera2
-from picamera2.encoders import H264Encoder
+from picamera2.encoders import MJPEGEncoder
 
-picam2 = Picamera2()
-encoder = H264Encoder()
+
+#Set Camare settings
+
+picam2_1 = Picamera2(1)
+#encoder = MJPEGEncoder()
+
+config_1 = picam2_1.create_video_configuration(main = {"size" : (640,480)}, controls  = {'FrameRate': 200})
+
+picam2_1.configure(config_1)
+
 
 #Define GPIOS
 
@@ -132,7 +140,8 @@ if __name__=="__main__":
     textCommand(0x01)
 
     # Start Camera recording 
-    picam2.start_recording(encoder, "race.h264")
+    #picam2_1.start_recording(encoder, "race.mp4")
+    picam2_1.start_and_record_video("race.mp4")
     
     #Start Race
 
@@ -154,7 +163,7 @@ if __name__=="__main__":
     textCommand(0x01)
     setText("Tempo final:\n {} ms".format(str(clock)))
     # Stop recodind
-    picam2.stop_recording()
+    picam2_1.stop_recording()
     time.sleep(10)
     
     time_stamp_race = (time_stamp_finish - time_stamp_start) / 1000000

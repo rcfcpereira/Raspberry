@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-cap = cv2.VideoCapture()
+cap = cv2.VideoCapture(0)
 
 # setup detector and parameters
 params = cv2.SimpleBlobDetector_Params()
