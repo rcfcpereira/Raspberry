@@ -4,7 +4,7 @@ import smbus
 from picamera2 import Picamera2
 from picamera2.encoders import H264Encoder
 
-picam2 = Picamera2(1)
+picam2 = Picamera2()
 encoder = H264Encoder()
 
 #Define GPIOS
@@ -136,9 +136,10 @@ if __name__=="__main__":
     
     #Start Race
 
+
     time_stamp_start = time.process_time_ns() 
-    print(time_stamp_start)
-    #Clock work waiting for Race Car pass finish sensor 
+
+    #Time work waiting for Race Car pass finish sensor 
     clock = 0
     while (GPIO.input(SENSOR_FINISH_LEFT) == 1):
         
