@@ -1,84 +1,141 @@
-# SPDX-FileCopyrightText: 2017 Tony DiCola for Adafruit Industries
-# SPDX-FileCopyrightText: 2017 James DeVito for Adafruit Industries
-# SPDX-License-Identifier: MIT
-
-# This example is for use on (Linux) computers that are using CPython with
-# Adafruit Blinka to support CircuitPython libraries. CircuitPython does
-# not support PIL/pillow (python imaging library)!
-
+# #!/usr/bin/python
+# # -*- coding: UTF-8 -*-
+import os
+import sys 
 import time
-import subprocess
+import spidev as SPI
+#sys.path.append("..")
+from lib import LCD_1inch54
+from lib import LCD_1inch3
+from PIL import Image,ImageDraw,ImageFont
 
-from board import SCL, SDA
-import busio
-from PIL import Image, ImageDraw, ImageFont
-import adafruit_ssd1306
+def rotate_print(self):
+    im_r=self.rotate(270)
+    disp.ShowImage(im_r)
 
+# lcd gpio configuration:
+RST = 27
+DC = 25
+BL = 15
+bus = 0 
+device = 0 
 
-# Create the I2C interface.
-i2c = busio.I2C(SCL, SDA)
+disp = LCD_1inch3.LCD_1inch3(spi=SPI.SpiDev(bus, device),spi_freq=1000000000,rst=RST,dc=DC,bl=BL)
+#disp = LCD_1inch3.LCD_1inch3()
+    # Initialize library.
+disp.Init()
+    # Clear display.
+# disp.clear()
 
-# Create the SSD1306 OLED class.
-# The first two parameters are the pixel width and pixel height.  Change these
-# to the right size for your display!
-disp = adafruit_ssd1306.SSD1306_I2C(128, 32, i2c)
+#Set Fonts
+Font1 = ImageFont.truetype("Font/Font02.ttf",40)
+Font2 = ImageFont.truetype("Font/Font02.ttf",35)
+Font3 = ImageFont.truetype("Font/Font02.ttf",20)
 
-# Clear display.
-disp.fill(0)
-disp.show()
-
-# Create blank image for drawing.
-# Make sure to create image with mode '1' for 1-bit color.
-width = disp.width
-height = disp.height
-image = Image.new("1", (128, 32))
-
-# Get drawing object to draw on image.
+# Create blank image for drawing
+image = Image.new("HSV", (disp.width, disp.height), "BLACK")
+# draw = ImageDraw.Draw(image)
 draw = ImageDraw.Draw(image)
 
-# Draw a black filled box to clear the image.
-draw.rectangle((0, 0, 128, 32), outline=1, fill=0)
+time.sleep(5)
 
-# Draw some shapes.
-# First define some constants to allow easy resizing of shapes.
-padding = -2
-top = padding
-bottom = height - padding
-# Move left to right keeping track of the current x position for drawing shapes.
-x = 0
+draw.text((5, 5), 'Drag Race', fill = "WHITE",font=Font1)
+im_r=image.rotate(270)
+disp.ShowImage(im_r)
+
+#draw.text((5, 40), 'END RACE', fill = "WHITE",font=Font2)
+
+time.sleep(5)
+
+# im_r=image.rotate(270)
+# disp.ShowImage(im_r)
+
+draw.text((5,40), "Race Start in:", fill = "WHITE", font=Font2)
+
+for x in range(6):
+    draw.rectangle([(9,74),(41,115)],fill = "BLACK")
+    draw.text((10,75), "{}".format(str((5-x))), fill = "RED", font = Font1)
+    rotate_print(image)
+    time.sleep(1)
 
 
-# # Load default font.
-# font = ImageFont.load_default()
 
-# # Alternatively load a TTF font.  Make sure the .ttf font file is in the
-# # same directory as the python script!
-# # Some other nice fonts to try: http://www.dafont.com/bitmap.php
-# # font = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', 9)
+time.sleep(20)
 
-# while True:
-#     # Draw a black filled box to clear the image.
-#     draw.rectangle((0, 0, width, height), outline=0, fill=0)
+disp.clear()
 
-#     # Shell scripts for system monitoring from here:
-#     # https://unix.stackexchange.com/questions/119126/command-to-display-memory-usage-disk-usage-and-cpu-load
-#     cmd = "hostname -I | cut -d' ' -f1"
-#     IP = subprocess.check_output(cmd, shell=True).decode("utf-8")
-#     cmd = 'cut -f 1 -d " " /proc/loadavg'
-#     CPU = subprocess.check_output(cmd, shell=True).decode("utf-8")
-#     cmd = "free -m | awk 'NR==2{printf \"Mem: %s/%s MB  %.2f%%\", $3,$2,$3*100/$2 }'"
-#     MemUsage = subprocess.check_output(cmd, shell=True).decode("utf-8")
-#     cmd = 'df -h | awk \'$NF=="/"{printf "Disk: %d/%d GB  %s", $3,$2,$5}\''
-#     Disk = subprocess.check_output(cmd, shell=True).decode("utf-8")
+disp.module_exit()
 
-#     # Write four lines of text.
+# #!/usr/bin/python
+# # -*- coding: UTF-8 -*-
+# import os
+# import sys 
+# import time
+# import spidev as SPI
+# from lib import LCD_1inch3
+# from PIL import Image,ImageDraw,ImageFont
 
-#     draw.text((x, top + 0), "IP: " + IP, font=font, fill=255)
-#     draw.text((x, top + 8), "CPU load: " + CPU, font=font, fill=255)
-#     draw.text((x, top + 16), MemUsage, font=font, fill=255)
-#     draw.text((x, top + 25), Disk, font=font, fill=255)
+# # lcd gpio configuration:
+# RST = 27
+# DC = 25
+# BL = 15
+# bus = 0 
+# device = 0 
 
-    # Display image.
-disp.image(image)
-disp.show()
+# # Initialize the LCD display
+# disp = LCD_1inch3.LCD_1inch3(spi=SPI.SpiDev(bus, device),spi_freq=10000000,rst=RST,dc=DC,bl=BL)
+# disp.Init()
+# disp.clear()
+
+# # Create a white image for drawing
+# image = Image.new("RGB", (disp.width, disp.height), "PURPLE")
+# draw = ImageDraw.Draw(image)
+
+# # Draw the white image on the display
+# disp.ShowImage(image)
+
+# time.sleep(10)
+
+# disp.module_exit()
+
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+# import os
+# import sys 
+# import time
+# import spidev as SPI
+# from lib import LCD_1inch3
+# from PIL import Image,ImageDraw,ImageFont
+
+# # lcd gpio configuration:
+# RST = 27
+# DC = 25
+# BL = 15
+# bus = 0 
+# device = 0 
+
+# # Initialize the LCD display
+# disp = LCD_1inch3.LCD_1inch3(spi=SPI.SpiDev(bus, device),spi_freq=10000000,rst=RST,dc=DC,bl=BL)
+# disp.Init()
+# disp.clear()
+
+# # Create a black image for drawing
+# image = Image.new("RGB", (disp.width, disp.height), "BLACK")
+# draw = ImageDraw.Draw(image)
+
+# # # Set the font
+# # font = ImageFont.truetype("Font/Font01.ttf",25)
+
+# # Write a message with white text
+# draw.text((10, 10), "Hello, World!", fill="WHITE", font=font3)
+
+# #Rotate image
+
+# im_r=image.rotate(270)
+
+# # Draw the image on the display
+# disp.ShowImage(im_r)
+
 time.sleep(10)
+
+disp.module_exit()
