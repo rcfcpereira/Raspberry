@@ -1,6 +1,5 @@
-
 import os
-import sys 
+import sys
 import time
 import spidev as SPI
 sys.path.append("..")
@@ -20,11 +19,11 @@ def rotate_print(self):
 # lcd gpio configuration:
 RST = 27
 DC = 25
-BL = 15
-bus = 0 
-device = 0 
+BL = 13
+bus = 0
+device = 0
 
-disp = LCD_1inch3.LCD_1inch3(spi=SPI.SpiDev(bus, device),spi_freq=100000000,rst=RST,dc=DC,bl=BL)
+disp = LCD_1inch3.LCD_1inch3(spi=SPI.SpiDev(bus, device),spi_freq=40000000,rst=RST,dc=DC,bl=BL)
 #disp = LCD_1inch3.LCD_1inch3()
 # Initialize library.
 disp.Init()
@@ -93,19 +92,19 @@ GPIO.output(START_LINE_CHECK, 1)
 class events:
     @staticmethod
     def line_checker():
-        
+
         if (GPIO.input(SENSOR_START_LEFT) == 1):
 
             GPIO.output(START_LINE_CHECK,1)
             print("Void")
 
         else:
-            
+
             GPIO.output(START_LINE_CHECK,0)
             print("READY")
 
 # Attach the interrupt handler to GPIO23 with a rising-edge trigger
-GPIO.add_event_detect(SENSOR_START_LEFT, GPIO.BOTH, events.line_checker(), bouncetime = 500) #bouncetime=100
+GPIO.add_event_detect(SENSOR_START_LEFT, GPIO.BOTH, events.line_checker(), bouncetime = 100) #bouncetime=100
 
 # #########################################
 # #LCD 16x2
@@ -113,11 +112,11 @@ GPIO.add_event_detect(SENSOR_START_LEFT, GPIO.BOTH, events.line_checker(), bounc
 # bus = smbus.SMBus(1)
 # DISPLAY_TEXT_ADDR = 0x3e
 
-# # send command to display (no need for external use)    
+# # send command to display (no need for external use)
 # def textCommand(cmd):
 #     bus.write_byte_data(DISPLAY_TEXT_ADDR,0x80,cmd)
 
-# # set display text \n for second line(or auto wrap)     
+# # set display text \n for second line(or auto wrap)
 # def setText(text):
 #     textCommand(0x01) # clear display
 #     time.sleep(.05)
@@ -162,6 +161,7 @@ GPIO.add_event_detect(SENSOR_START_LEFT, GPIO.BOTH, events.line_checker(), bounc
 #         bus.write_byte_data(DISPLAY_TEXT_ADDR,0x40,ord(c))
 
 #Coder
+
 if __name__=="__main__":
 
     #Start clock
@@ -172,7 +172,7 @@ if __name__=="__main__":
     draw.text((10, 5), 'Drag Race', fill = "WHITE",font=Font1)
     im_r=image.rotate(270)
     disp.ShowImage(im_r)
-    
+
     time.sleep(10)
 
     # Wait for Race Car to stay on start mark
@@ -190,14 +190,14 @@ if __name__=="__main__":
 
     GPIO.output(START_BUTTON_LED,1)
 
-    
+
 
     while True:
         # Press Button to Start Race
-        
+
         if (GPIO.input(START_BUTTON) == 0 and GPIO.input(SENSOR_START_LEFT) == 1):
 
-            # Start Camera recording 
+            # Start Camera recording
             picam2_0.start_and_record_video("left_track.mp4")
             picam2_1.start_and_record_video("rigth_track.mp4")
 
@@ -214,26 +214,27 @@ if __name__=="__main__":
                 rotate_print(image)
                 time.sleep(1)
 
-                if x == 5 : 
+                if x == 5 :
                     #START LIGHTS ON
                     GPIO.output(START_LEFT_LED, 1)
-           
+
                     break
 
-                #textCommand(0x01)
 
-                # Start Camera recording 
+               #textCommand(0x01)
+
+                # Start Camera recording
                 # picam2_0.start_and_record_video("race_0.mp4")
                 # picam2_1.start_and_record_video("race_1.mp4")
-                
+
                 #Start Race
 
-    time_stamp_start = time.process_time_ns() 
+    time_stamp_start = time.process_time_ns()
 
-    #Time work waiting for Race Car pass finish sensor 
+    #Time work waiting for Race Car pass finish sensor
     clock = 0
     while (GPIO.input(SENSOR_FINISH_LEFT) == 1):
-        
+
         # setText_norefresh("Time\n {} ms".format(str(clock)))
         #clock = 1+clock
         time.sleep(0.05)
@@ -241,21 +242,22 @@ if __name__=="__main__":
 
     time_stamp_finish = time.process_time_ns()
     print(time_stamp_finish)
+
     # End Race
     # textCommand(0x01)
     # setText("Tempo final:\n {} ms".format(str(clock)))
-    
-    # Stop recodind
+
+    # Stop recoding
     picam2_0.stop_recording()
     picam2_1.stop_recording()
     time.sleep(10)
-    
+
     time_stamp_race = (time_stamp_finish - time_stamp_start) / 1000000
-    
+
     # setText("Time measure\n {} ms".format(str(time_stamp_race)))
     # time.sleep(15)
     # #END RACE
-    # setText("End race!!!!!")    
+    # setText("End race!!!!!")
     # time.sleep(5)
 
     # #Clear Display
@@ -265,6 +267,8 @@ if __name__=="__main__":
     # p.stop()
     GPIO.cleanup()
     disp.module_exit()
-    
-    #end 
+
+    #end
     exit()
+
+#finish
