@@ -1,11 +1,10 @@
-#
-
 import RPi.GPIO as GPIO
 import spidev as SPI
 from picamera2 import Picamera2
 from picamera2.encoders import MultiEncoder
 from lib import LCD_2inch4
 import threading
+from PIL import Image, ImageDraw, ImageFont
 
 class RaceSetup:
     def __init__(self):
@@ -92,3 +91,7 @@ class RaceSetup:
         self.setup_display()
         self.setup_camera_threads()
         self.setup_camera_config()
+
+    def rotate_print(self, image):
+        im_r = image.rotate(180)
+        self.disp.ShowImage(im_r)
