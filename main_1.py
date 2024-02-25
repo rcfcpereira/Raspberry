@@ -211,15 +211,10 @@ if __name__=="__main__":
             
             time.sleep(0.01)
 
-        #time_stamp_finish = time.process_time_ns()
-        #print(time_stamp_finish)
-
         # Stop recodind
         picam2_0.stop_recording()
         picam2_1.stop_recording()
         
-        # print(time_stamp_start)
-        #print(time_stamp_finish)
 
         time_stamp_left = ((racer_left_finish_time - time_stamp_start) / 1000000000)
         time_stamp_rigth = ((racer_rigth_finish_time - time_stamp_start) / 1000000000)
@@ -244,15 +239,6 @@ if __name__=="__main__":
         draw.text((65, 100), 'END RACE', fill = "WHITE",font=Font2)
         rotate_print(image)
         time.sleep(5)
-
-        # print(time_stamp_start)
-        # print(racer_left_start_time)
-        # print(racer_rigth_start_time)
-        # #print(time_stamp_finish)
-        # print(racer_left_finish_time)
-        # print(((racer_left_finish_time-time_stamp_start)/1000000000))
-        # print(racer_rigth_finish_time)
-        # print(((racer_rigth_finish_time-time_stamp_start)/1000000000))
         
         disp.clear()
         disp.module_exit()
