@@ -3,9 +3,12 @@
 import os
 import time
 import RPi.GPIO as GPIO
+import spidev as SPI
+import smbus
 from picamera2 import Picamera2
 from picamera2.encoders import MultiEncoder
 from PIL import Image, ImageDraw, ImageFont
+from lib import LCD_2inch4
 import threading
 
 # Define lcd gpio configuration:

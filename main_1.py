@@ -11,6 +11,7 @@ from picamera2.encoders import MultiEncoder
 from lib import LCD_2inch4
 from PIL import Image,ImageDraw,ImageFont
 
+
 #Function to rotate screen and send to display
 def rotate_print(self):
     im_r=self.rotate(180)
