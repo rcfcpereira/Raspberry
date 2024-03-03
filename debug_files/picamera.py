@@ -16,19 +16,19 @@ from time import sleep
 
 #Set Camare settings
 picam2_0 = Picamera2(0)
-#picam2_1 = Picamera2(1)
+picam2_1 = Picamera2(1)
 encoder = MultiEncoder()
 
 config_0 = picam2_0.create_video_configuration(main = {"size" : (640,480), "format" : "RGB888"}, controls  = {'FrameRate': 120})
-#config_1 = picam2_1.create_video_configuration(main = {"size" : (640,480), "format" : "RGB888"}, controls  = {'FrameRate': 120})
+config_1 = picam2_1.create_video_configuration(main = {"size" : (640,480), "format" : "RGB888"}, controls  = {'FrameRate': 120})
 
 picam2_0.configure(config_0)
-#picam2_1.configure(config_1)
+picam2_1.configure(config_1)
 
 picam2_0.start_and_record_video("left_track.mp4")
-#picam2_1.start_and_record_video("rigth_track.mp4")
+picam2_1.start_and_record_video("rigth_track.mp4")
 
 sleep(5)
 
 picam2_0.stop_recording()
-#picam2_1.stop_recording()
+picam2_1.stop_recording()

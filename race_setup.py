@@ -6,7 +6,9 @@ from lib import LCD_2inch4
 import threading
 from PIL import Image, ImageDraw, ImageFont
 
+
 class RaceSetup:
+    
     def __init__(self):
         self.GPIO_initialized = False
         self.display_initialized = False

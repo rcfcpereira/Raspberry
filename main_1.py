@@ -1,16 +1,21 @@
 import os
 import sys
 import time
-import spidev as SPI
-import smbus
+
 import RPi.GPIO as GPIO
+from PIL import Image, ImageDraw, ImageFont
 from picamera2 import Picamera2
 from picamera2.encoders import MultiEncoder
-
-#sys.path.append("..")
+import spidev as SPI
+import smbus
 from lib import LCD_2inch4
-from PIL import Image,ImageDraw,ImageFont
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> 3aaa142 (V 4.2)
 
+>>>>>>> 3aaa142 (V 4.2)
 
 #Function to rotate screen and send to display
 def rotate_print(self):
@@ -18,13 +23,13 @@ def rotate_print(self):
     disp.ShowImage(im_r)
 
 # lcd gpio configuration:
-RST = 27
-DC = 25
-BL = 24
-bus = 0
-device = 0
+RST_PIN = 27
+DC_PIN = 25
+BL_PIN = 24
+BUS = 0
+DEVICE = 0
 
-disp = LCD_2inch4.LCD_2inch4(spi=SPI.SpiDev(bus, device),spi_freq=40000000,rst=RST,dc=DC,bl=BL)
+disp = LCD_2inch4.LCD_2inch4(spi=SPI.SpiDev(BUS, DEVICE),spi_freq=40000000,rst=RST_PIN,dc=DC_PIN,bl=BL_PIN)
 #disp = LCD_1inch3.LCD_1inch3()
 # Initialize library.
 disp.Init()
@@ -41,9 +46,6 @@ Font4 = ImageFont.truetype("Font/Font02.ttf",100)
 time.sleep(1)
 
 # Create blank image for drawing.
-# image = Image.new("RGB", (disp.width, disp.height), "BLACK")
-# draw = ImageDraw.Draw(image)
-# rotate_print(image)
 image = Image.new("RGB", (disp.width, disp.height), "BLACK")
 draw = ImageDraw.Draw(image)
 rotate_print(image)
@@ -211,10 +213,19 @@ if __name__=="__main__":
             
             time.sleep(0.01)
 
+        #time_stamp_finish = time.process_time_ns()
+        #print(time_stamp_finish)
+
+        #Disable finish sensor's
+        FINISH_SENSORS = SENSOR_FINISH_LEFT, SENSOR_FINISH_RIGTH
+        GPIO.cleanup(FINISH_SENSORS)
+
         # Stop recodind
         picam2_0.stop_recording()
         picam2_1.stop_recording()
         
+        # print(time_stamp_start)
+        #print(time_stamp_finish)
 
         time_stamp_left = ((racer_left_finish_time - time_stamp_start) / 1000000000)
         time_stamp_rigth = ((racer_rigth_finish_time - time_stamp_start) / 1000000000)
