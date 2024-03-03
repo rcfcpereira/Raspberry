@@ -32,22 +32,12 @@ disp.Init()
 disp.clear()
 
 # Display DutyCycle
-disp.bl_DutyCycle(100)
+disp.bl_DutyCycle(60)
 # Set Fonts
 Font1 = ImageFont.truetype("Font/Font02.ttf", 30)
 Font2 = ImageFont.truetype("Font/Font02.ttf", 24)
 Font3 = ImageFont.truetype("Font/Font02.ttf", 15)
 Font4 = ImageFont.truetype("Font/Font02.ttf", 100)
-
-#Display DutyCycle
-disp.bl_DutyCycle(50)
-#Set Fonts
-Font1 = ImageFont.truetype("Font/Font02.ttf",30)
-Font2 = ImageFont.truetype("Font/Font02.ttf",24)
-Font3 = ImageFont.truetype("Font/Font02.ttf",15)
-Font4 = ImageFont.truetype("Font/Font02.ttf",100)
-
-time.sleep(1)
 
 # Create blank image for drawing.
 image = Image.new("RGB", (disp.width, disp.height), "BLACK")
@@ -62,8 +52,8 @@ picam2_0 = Picamera2(0)
 picam2_1 = Picamera2(1)
 encoder = MultiEncoder()
 
-config_0 = picam2_0.create_video_configuration(main={"size": (640, 480), "format": "RGB888"},controls={'FrameRate': 200})
-config_1 = picam2_1.create_video_configuration(main={"size": (640, 480), "format": "RGB888"},controls={'FrameRate': 200})
+config_0 = picam2_0.create_video_configuration(main={"size": (640, 480), "format": "RGB888"},controls={'FrameRate': 120})
+config_1 = picam2_1.create_video_configuration(main={"size": (640, 480), "format": "RGB888"},controls={'FrameRate': 120})
 
 picam2_0.configure(config_0)
 picam2_1.configure(config_1)
