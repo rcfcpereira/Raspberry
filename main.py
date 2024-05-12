@@ -3,7 +3,7 @@
 import time
 import threading
 
-import debug_files.gpio_lib as RaceGPIO
+import gpio_lib as RaceGPIO
 import lcd_lib as RaceLCD
 from picamera2 import Picamera2
 from picamera2.encoders import MultiEncoder
@@ -115,7 +115,7 @@ if __name__ == "__main__":
         draw.rectangle([(0, 100), (240, 320)], fill="BLACK")
         draw.text((15, 100), "TIME:", fill="WHITE", font=fonts[1])
        
-        while not(gpio_race.racer_left_cross and gpio_race.racer_right_cross or clock > 90):
+        while not(gpio_race.racer_left_cross and gpio_race.racer_right_cross or clock > 5):
 
             draw.rectangle([(20, 124), (240, 148)], fill="BLACK")
             draw.text((20, 124), "{:.3f} s".format(clock), fill="RED", font=fonts[1])
@@ -170,7 +170,7 @@ if __name__ == "__main__":
 
         # Display final times on LCD
         lcd_race.rotate_print(image)
-        time.sleep(10)
+        time.sleep(5)
 
         # End race    
         draw.rectangle([(0, 100), (240, 320)], fill="BLACK")
