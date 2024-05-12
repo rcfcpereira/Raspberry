@@ -2,9 +2,7 @@
 
 from PIL import Image, ImageDraw, ImageFont
 import spidev as SPI
-import smbus
 from lib import LCD_2inch4
-import time
 
 class RaceLCD:
     def __init__(self, BUS=0, DEVICE=0, RST_PIN=27, DC_PIN=25, BL_PIN=24):

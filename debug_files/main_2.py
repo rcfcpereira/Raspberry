@@ -5,7 +5,7 @@ import sys
 import time
 import threading
 
-import gpio_lib as RaceGPIO
+import debug_files.gpio_lib as RaceGPIO
 from PIL import Image, ImageDraw, ImageFont
 from picamera2 import Picamera2
 from picamera2.encoders import MultiEncoder

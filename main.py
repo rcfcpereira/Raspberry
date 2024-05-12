@@ -1,14 +1,10 @@
 #main.py
 
-
-#import os
-#import sys
 import time
 import threading
 
-import gpio_lib as RaceGPIO
+import debug_files.gpio_lib as RaceGPIO
 import lcd_lib as RaceLCD
-from PIL import Image
 from picamera2 import Picamera2
 from picamera2.encoders import MultiEncoder
 import race_logging  # Import the race logging module
@@ -36,6 +32,7 @@ if __name__ == "__main__":
     
     gpio_race = RaceGPIO.RaceGPIO()
     lcd_race = RaceLCD.RaceLCD()
+    race_logging.initialize_race_log("race_log.csv")
 
     # Create image and draw of the display
     image, draw = lcd_race.create_image()
