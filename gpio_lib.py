@@ -227,6 +227,29 @@ class RaceGPIO:
         GPIO.remove_event_detect(self.SENSOR_FINISH_LEFT)
         GPIO.remove_event_detect(self.SENSOR_FINISH_RIGHT)
 
+    #clean up GPIO's configuration for loop
+    def loop_cleanup(self):
+        """
+        Clean up GPIO configuration and variables.
+
+        Args:
+            None
+
+        Returns:
+            None
+        """
+        GPIO.output(self.START_LIGHT, 0)
+        GPIO.output(self.START_BUTTON_LED, 0)
+        GPIO.output(self.FALSE_START_LEFT_LED, 0)
+        GPIO.output(self.FALSE_START_RIGHT_LED, 0)
+
+        self.racer_left = False
+        self.racer_right = False
+        self.racer_left_finish_time = 0
+        self.racer_right_finish_time = 0
+        self.racer_left_cross = False
+        self.racer_right_cross = False       
+
     # Cleanup GPIO's configuration pins
     def cleanup(self):
         """

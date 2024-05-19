@@ -1,0 +1,26 @@
+Race Number,Left Racer Time (s),Right Racer Time (s),Left Racer Status,Right Racer Status
+1,2.412922453,2.301172838,2.413 s,2.301 s
+2,6.037131599,5.960532653,False Start,False Start
+3,-23.841109579,-23.841109579,False Start,Not Finish
+4,-20.99217041,-20.99217041,Not Finish,False Start
+5,1.596571234,1.41500785,False Start,False Start
+6,0.089919543,0.168979773,Finish,Finish
+7,0.018922032,1.292550438,Finish,Finish
+8,0.239103327,0.237612364,Finish,Finish
+9,3.771217047,3.66091128,Finish,Finish
+10,1.066913242,3.129322381,False Start,Finish
+11,-27.261330188,-25.198921049,False Start,Not Finish
+12,-52.635312243,-50.572903104,False Start,Not Finish
+13,-19.422742675,-19.422742675,Not Finish,Not Finish
+14,2.397724617,2.345783559,False Start,False Start
+15,-18.90090765,-18.952848708,Not Finish,Not Finish
+16,-39.292821409,-39.344762467,Not Finish,Not Finish
+17,-79.825865994,-79.877807052,Not Finish,Not Finish
+18,-97.730173982,-97.78211504,Not Finish,Not Finish
+19,2.145764092,2.007713078,Finish,Finish
+20,-29.815670107,-29.953721121,False Start,False Start
+21,2.656258476,2.490690685,Finish,Finish
+22,-56.561468039,-56.561468039,False Start,False Start
+23,-87.115411182,-87.115411182,Not Finish,Not Finish
+24,-120.699461026,-120.699461026,False Start,Not Finish
+25,1.622090989,0.660040635,Finish,Finish
