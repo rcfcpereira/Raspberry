@@ -264,7 +264,7 @@ def main():
             draw.rectangle([(0, 0), (240, 320)], fill="BLACK")
             lcd_race.rotate_print(image) 
             lcd_race.cleanup_display()
-            # GPIO Cleanu
+            # GPIO Cleanup
             gpio_race.cleanup()
 
             break  # This will break the infinite loop when a KeyboardInterrupt occurs
