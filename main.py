@@ -15,6 +15,20 @@ import race_logging  # Import the race logging module
 MAX_CLOCK = 10 # Maximum
 
 def configure_camera():
+    """
+    Configures two cameras using the Picamera2 class.
+
+    This function creates two instances of Picamera2, each with a different camera index (0 and 1). 
+    It then creates two video configurations for the two cameras. Both configurations set the video size to 640x480 pixels 
+    and the format to RGB888. They also set the frame rate to 200 frames per second. 
+    These configurations are then applied to the respective cameras using the configure() method.
+
+    Args:
+        None
+
+    Returns:
+        tuple: A tuple containing two configured Picamera2 instances.
+    """    
     picam2_0 = Picamera2(0)
     picam2_1 = Picamera2(1)
     encoder = MultiEncoder()
@@ -28,13 +42,41 @@ def configure_camera():
     return picam2_0, picam2_1
 
 def run_camera(camera, filename):
+    """
+    Starts recording video with the given camera.
+
+    This function tries to start recording video with the given camera using the `start_and_record_video()` method of the `camera` object. 
+    If there's an exception (an error occurs), the function catches it and prints an error message.
+
+    Args:
+        camera: An instance of a camera class.
+        filename (str): The name of the file where the video will be saved.
+
+    Returns:
+        None
+    """
     try:
         camera.start_and_record_video(filename)
     except Exception as e:
         print(f"Failed to start and record video: {e}")
 
 def main():
+    """
+    Main function of a drag race program.
 
+    This function initializes two cameras, GPIO and LCD, and a CSV log file. It creates an image and fonts for the LCD display, 
+    and initializes two threads for running the cameras. It enters an infinite loop where it waits for the start button to be pressed. 
+    Once pressed, it starts recording with both cameras and displays a countdown on the LCD. When the countdown finishes, it starts a timer 
+    and waits for the finish line to be crossed or for a maximum time to be reached. Once the race is finished, it stops the cameras, 
+    calculates the final times, and checks if there was a false start or if the time limit was exceeded. It then prints the final times on 
+    the console and displays them on the LCD. Finally, it logs the race results in the CSV file and cleans up the GPIO and LCD.
+
+    Args:
+        None
+
+    Returns:
+        None
+    """    
     #Start the main program
 
     #Start the camera
@@ -201,7 +243,7 @@ def main():
 
             race_logging.append_race_log(race_log_filename, race_number, time_stamp_left, time_stamp_right, left_status, right_status)
 
-            #End message on console
+            #End message of race on console
             print("\nRace Ended\nPress CTRL + C to end program\n")
             
             draw.rectangle([(0, 0), (240, 320)], fill="BLACK")
@@ -211,14 +253,14 @@ def main():
 
         except KeyboardInterrupt:
 
+            #Print to console to inform user that the program has ended
+            print("User ended the program")   
+
             # Cleanup GPIO, LCD 
             picam2_0.stop_recording()
-            picam2_1.stop_recording()
+            picam2_1.stop_recording()           
             
-            print("User ended the program")
-                      
-
-            l# Display: clear and close 
+            # Display: clear and close 
             lcd_race.cleanup_display()
             # GPIO Cleanup
             gpio_race.cleanup()
