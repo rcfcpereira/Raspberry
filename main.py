@@ -246,8 +246,8 @@ def main():
             #End message of race on console
             print("\nRace Ended\nPress CTRL + C to end program\n")
             
-            draw.rectangle([(0, 0), (240, 320)], fill="BLACK")
-            lcd_race.rotate_print(image)
+            # draw.rectangle([(0, 0), (240, 320)], fill="BLACK")
+            # lcd_race.rotate_print(image)
 
             gpio_race.loop_cleanup()
 
@@ -260,12 +260,14 @@ def main():
             picam2_0.stop_recording()
             picam2_1.stop_recording()           
             
-            # Display: clear and close 
+            # Display: clear and close
+            draw.rectangle([(0, 0), (240, 320)], fill="BLACK")
+            lcd_race.rotate_print(image) 
             lcd_race.cleanup_display()
-            # GPIO Cleanup
+            # GPIO Cleanu
             gpio_race.cleanup()
 
-            #break  # This will break the infinite loop when a KeyboardInterrupt occurs
+            break  # This will break the infinite loop when a KeyboardInterrupt occurs
 
 if __name__ == "__main__":
     main()
