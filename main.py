@@ -234,9 +234,6 @@ def main():
             draw.text((65, 100), 'END RACE', fill="WHITE", font=fonts[1])
             lcd_race.rotate_print(image)
             time.sleep(5)
-        
-            # lcd_race.cleanup_display()
-            # gpio_race.cleanup()
 
             race_log_filename = "race_log.csv"
             race_number = race_logging.get_next_race_number(race_log_filename)
