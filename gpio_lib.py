@@ -58,9 +58,9 @@ class RaceGPIO:
         Returns:
             None
         """
-        self.racer_left = True
-        self.turn_on_false_start_left_led()
-        print("\nFalse start left\n")
+        if self.racer_left == False:
+            self.racer_left = True
+            self.turn_on_false_start_left_led()
 
     def false_start_right(self, channel):
         """
@@ -72,9 +72,9 @@ class RaceGPIO:
         Returns:
             None
         """
-        self.racer_right = True
-        self.turn_on_false_start_right_led()
-        print("\nFalse start right\n")
+        if self.racer_right == False:
+            self.racer_right = True
+            self.turn_on_false_start_right_led()
 
     def finish_left_lane(self, channel):
         """
@@ -142,7 +142,7 @@ class RaceGPIO:
             None
         """
         GPIO.output(self.FALSE_START_LEFT_LED, 1)
-        print("False start left\n")
+        print("\nFalse start left\n")
 
     def turn_on_false_start_right_led(self):
         """
@@ -155,7 +155,7 @@ class RaceGPIO:
             None
         """
         GPIO.output(self.FALSE_START_RIGHT_LED, 1)
-        print("False start right\n")
+        print("\nFalse start right\n")
 
     def get_start_button_state(self):
         """

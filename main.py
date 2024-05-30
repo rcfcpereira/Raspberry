@@ -88,7 +88,7 @@ def main():
     #Initialize CSV
     race_logging.initialize_race_log("race_log.csv")
 
-    #Initializa LCD image and fonts
+    #Initialize LCD image and fonts
     image, draw = lcd_race.create_image()
     fonts = lcd_race.create_fonts()
 
@@ -132,7 +132,7 @@ def main():
                     #Get race number from cvs file
                     race_number = race_logging.get_next_race_number("race_log.csv")
                     
-                    #Cameras Starte reconrding
+                    #Cameras Start recording
                     run_camera(picam2_0, f"left_track_race{race_number}.mp4")
                     run_camera(picam2_1, f"right_track_race{race_number}.mp4")
 
@@ -246,8 +246,8 @@ def main():
             #End message of race on console
             print("\nRace Ended\nPress CTRL + C to end program\n")
             
-            # draw.rectangle([(0, 0), (240, 320)], fill="BLACK")
-            # lcd_race.rotate_print(image)
+            draw.rectangle([(0, 0), (240, 320)], fill="BLACK")
+            lcd_race.rotate_print(image)
 
             gpio_race.loop_cleanup()
 
